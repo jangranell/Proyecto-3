@@ -18,6 +18,7 @@ const Login = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log(postLogin);
     postLogin();
     console.log("FUNCIONA");
   };
@@ -59,7 +60,7 @@ const Login = () => {
           <input type="text" name="dni" onChange={handleChange} />
           <br />
           <br />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit"/>
         </form>
       </fieldset>
     </div>

@@ -11,18 +11,15 @@ Sube a MongoDB el Body (RAW => JSON) // W I P
 
 */
 
-
 require("dotenv").config();
 
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
-const User = require("./models/Usuario"); 
+const User = require("./models/Usuario");
 const auth = require("./routes/authentication");
 
-
 const app = express();
-
 
 const port = 3001;
 
@@ -38,6 +35,19 @@ mongoose
     console.log(error);
   });
 
+/* var allowlist = ["http://localhost:3000"];
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
+
+*/
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
