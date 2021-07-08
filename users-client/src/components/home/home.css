@@ -1,0 +1,43 @@
+body{
+    background-color: #9e9e9e;
+    color: black;
+    margin: 1%;
+};
+
+.home-container{
+    font-size: 20px;
+};
+
+.home-container:hover{
+    font-size: 25px;
+    background-color: aquamarine;
+}
+
+link:link{
+  background-color: aqua;
+  color: aliceblue;
+}
+
+link:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+link:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+link:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+link:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}

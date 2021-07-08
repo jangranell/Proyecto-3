@@ -10,17 +10,21 @@ Sube a MongoDB el Body (RAW => JSON) // W I P
 
 
 */
+
+
 require("dotenv").config();
 
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
-const usuarios = require("./models/Usuario");
+const User = require("./models/Usuario"); 
+const auth = require("./routes/authentication");
+
 
 const app = express();
 
-const User = require("./models/Usuario");
 
-const port = 3000;
+const port = 3001;
 
 mongoose
   .connect(
@@ -28,15 +32,17 @@ mongoose
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
-    console.log("Estamos conectados a la base de datos.");
+    console.log("Ya estamos conectados a la base de datos.");
   })
   .catch((error) => {
     console.log(error);
   });
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use("/", auth);
+/*
 // rutas TRABAJADOR
 app.get("/home/:id", async (req, res) => {
   let id = req.params.id;
@@ -49,25 +55,22 @@ app.get("/home/:id", async (req, res) => {
 // rutas JEFE
 app.get("/boss/:id", async (req, res) => {
   let id = req.params.id;
-  let boss = await User.findById(id).then((foundUser) => {
-    for (let i = 0; i < usuarios.length; i++) {
-      return User[i];
-    };
+
+  let workers = await User.find().then((foundUser) => {
+    return foundUser;
   });
-  res.send(worker); 
+  res.send(workers);  
 });
 
 // rutas ADMIN
 app.get("/admin/:id", async (req, res) => {
   let id = req.params.id;
-  let admin = await User.findById(id).then((foundUser) => {
-    for (let i = 0; i < usuarios.length; i++) {
-      return User[i];
-    };
+  let workers = await User.find().then((foundUser) => {
+    return foundUser;
   });
-  res.send(worker); 
+  res.send(workers);  
 });
-
-app.listen(3000, () => {
-  console.log(`Servidor a la escucha en el puerto 3000.`);
+*/
+app.listen(port, () => {
+  console.log(`Servidor a la escucha en el puerto 3001.`);
 });
