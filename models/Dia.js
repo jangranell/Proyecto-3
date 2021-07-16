@@ -1,12 +1,7 @@
-
-// TAREA: METER EN SEEDS VARIAS FECHAS, HORAENTRADA, HORASALIDA.
-//        (res.send) nombre usuario
-
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const esquemaFecha = new Schema(
+const esquemaDia = new Schema(
   {
     fecha: String,
     horaEntrada: String,
@@ -20,5 +15,5 @@ const esquemaFecha = new Schema(
   }
 );
 
-const Fecha = mongoose.model("Fecha", esquemaFecha);
-module.exports = Fecha;
+const Dia = mongoose.model("Dia", esquemaDia);
+module.exports = Dia;

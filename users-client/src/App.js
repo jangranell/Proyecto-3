@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from "./components/home/home";
 import Login from "./components/forms/login";
 import Signup from "./components/signup/signup";
+import Session from "./components/session/session";
 import "./App.css";
 
 function App() {
@@ -27,6 +28,13 @@ function App() {
           path="/signup" 
           render={() => {
           return <Signup></Signup>;
+        }}
+        />
+        <Route 
+          exact 
+          path="/session" 
+          render={() => {
+          return <Session></Session>;
         }}
         />
       </Switch>

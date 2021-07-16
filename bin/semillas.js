@@ -35,7 +35,7 @@ let usuarios = [
     role: "Boss",
     equipo: ["60c5fbdc8c3b2720a2e13643", "60c5fbdc8c3b2720a2e13644"],
     _id: "60c5fbdc8c3b2720a2e13640",
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "Lluis",
@@ -45,7 +45,7 @@ let usuarios = [
     role: "Boss",
     equipo: ["60c5fbdc8c3b2720a2e13645", "60c5fbdc8c3b2720a2e13646"],
     _id: "60c5fbdc8c3b2720a2e13641",
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "Jan",
@@ -55,7 +55,7 @@ let usuarios = [
     role: "Admin",
     _id: "60c5fbdc8c3b2720a2e13642",
     equipo: [],
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "User1",
@@ -65,7 +65,7 @@ let usuarios = [
     role: "User",
     _id: "60c5fbdc8c3b2720a2e13643",
     equipo: [],
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "User2",
@@ -75,7 +75,7 @@ let usuarios = [
     role: "User",
     _id: "60c5fbdc8c3b2720a2e13644",
     equipo: [],
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "User3",
@@ -85,7 +85,7 @@ let usuarios = [
     role: "User",
     _id: "60c5fbdc8c3b2720a2e13645",
     equipo: [],
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
   {
     nombre: "User4",
@@ -95,7 +95,7 @@ let usuarios = [
     role: "User",
     _id: "60c5fbdc8c3b2720a2e13646",
     equipo: [],
-    dias: [], // Que Tengo Que Poner?
+    dias: []
   },
 ];
 
@@ -112,6 +112,12 @@ Usuario.deleteMany()
     usuariosCreadas.forEach((usuario) => {
       console.log(usuario.nombre);
     });
+    Dia.deleteMany().then(() => {
+      console.log(`Días eliminados.`);
+    }).then(()=>{
+      mongoose.disconnect();
+      console.log(`Nos hemos desconectado.`);
+    })
   })
   .catch((error) => {
     console.log("Ha ocurrido el siguiente error:");

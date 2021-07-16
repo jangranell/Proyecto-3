@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import "./login.css";
 const useState = React.useState;
 
 const Login = () => {
@@ -7,6 +9,8 @@ const Login = () => {
     nombre: "",
     dni: "",
   });
+
+  let history = useHistory();
 
   const handleChange = (event) => {
     setInfo({
@@ -16,18 +20,18 @@ const Login = () => {
     });
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(postLogin);
-    postLogin();
-    console.log("FUNCIONA");
+//Save User Token in localStorage
+    let myToken = await postLogin();
+    saveToken(myToken);
+// Save User Role in localStorage
+    let myRole = await postLogin2();
+    saveRole(myRole);
+    redirect();
   };
 
   const postLogin = async () => {
-    let inputInfo = {
-      nombre: info.nombre,
-      dni: info.dni,
-    };
     let responseFromPost = await fetch("http://localhost:3001/login", {
       method: "POST",
       headers: {
@@ -35,23 +39,51 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        nombre: inputInfo.nombre,
-        dni: inputInfo.dni,
+        nombre: info.nombre,
+        dni: info.dni,
       }),
     })
       .then((response) => response.json())
       .then((result) => {
         return result;
       });
-    console.log(responseFromPost);
+    return responseFromPost.token;
+  };
+  const postLogin2 = async () => {
+    let responseFromPost = await fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre: info.nombre,
+        dni: info.dni,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        return result;
+      });
+    return responseFromPost.Role;
+  };
+  
+  const saveToken = (tokenElement) => {
+    window.localStorage.setItem("token", tokenElement);
+  };
+  const saveRole = (roleElement) => {
+    window.localStorage.setItem("Role", roleElement);
+  };
+
+  const redirect = async () => {
+    history.push("/session");
   };
 
   return (
     <div>
-      {console.log(info)}
       <Link to="/">HOME</Link>
       <fieldset>
-        <legend> Log In</legend>
+        <legend> Log In </legend>
         <form onSubmit={handleFormSubmit}>
           <label>Nombre: </label>
           <input type="text" name="nombre" onChange={handleChange} />
@@ -60,7 +92,7 @@ const Login = () => {
           <input type="text" name="dni" onChange={handleChange} />
           <br />
           <br />
-          <input type="submit" value="Submit"/>
+          <input type="submit" value="Submit" />
         </form>
       </fieldset>
     </div>

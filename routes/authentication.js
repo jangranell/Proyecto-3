@@ -13,19 +13,20 @@ const User = require("../models/Usuario");
 
 const Equipo = require("../models/Equipo");
 
+const Dia = require("../models/Dia");
+
 const expirationTime = 1800;
 
 const salt = bcryptjs.genSaltSync(10);
 
 const tokenValidation = require("../functions/tokenValidation");
+const { findByIdAndUpdate } = require("../models/Usuario");
 
 // Prueba React
 
-authRoutes.get("/", (req,res) => {
-  res.send({message: "back end"});
+authRoutes.get("/", (req, res) => {
+  res.send({ message: "back end" });
 });
-
-
 
 //* SIGN UP //
 // Ejemplo
@@ -99,17 +100,11 @@ authRoutes.post("/signup", async (req, res) => {
 
 //* LOG IN
 
-////TODO ////
-////* Los usuarios van a poder ver sus horas de entrada en "/private"  ////
-////TODO ////
-
 authRoutes.post("/login", async (req, res) => {
   let nombre = req.body.nombre;
   let dni = req.body.dni;
-  console.log(req.body);
   let user = await User.findOne({ nombre: nombre, dni: dni }).then(
     (userFound) => {
-      console.log(userFound);
       return userFound;
     }
   );
@@ -132,11 +127,12 @@ authRoutes.post("/login", async (req, res) => {
 
   res.send({
     auth: true,
-    token: newToken,
     Nombre: user.nombre,
     Apellido: user.apellido,
-    ID: user._id,
     DNI: user.dni,
+    Role: user.role,
+    token: newToken,
+    ID: user._id,
   });
   //res.redirect('/private')
   res.send("ruta terminada");
@@ -146,9 +142,7 @@ authRoutes.post("/login", async (req, res) => {
 
 authRoutes.get("/private", async (req, res) => {
   const token = req.headers.token;
-  //const dni = req.headers.dni;
-  console.log(req);
-  let user = await tokenValidation(res, token, "User");
+  let user = await tokenValidation(res, token);
   if (!token) {
     res.send({
       auth: false,
@@ -156,24 +150,19 @@ authRoutes.get("/private", async (req, res) => {
     });
     return;
   }
-  const decoded = jwt.verify(token, process.env.SECRET_WORD);
-
-  //?  const user = await User.findById(decoded.id).populate("equipo");
 
   if (!user) {
     res.send({ auth: false, message: "User does not exist" });
     return;
   }
-
   res.send(user);
-  res.send("La ruta ha terminado.");
 });
 
-//* RUTA PRIVADA BOSS
+//* FECHA HORA
 
-authRoutes.get("/privateBoss", async (req, res) => {
+authRoutes.put("/entrada", async (req, res) => {
   const token = req.headers.token;
-  //const dni = req.headers.dni;
+  let user = await tokenValidation(res, token);
   if (!token) {
     res.send({
       auth: false,
@@ -181,44 +170,30 @@ authRoutes.get("/privateBoss", async (req, res) => {
     });
     return;
   }
-  console.log(req);
-  let user = await tokenValidation(res, token, "Boss");
 
   if (!user) {
     res.send({ auth: false, message: "User does not exist" });
     return;
   }
 
-  const boss = await User.findById(user._id).populate("equipo");
-
-  res.send(boss);
+  let fecha = req.body.fecha;
+  let horaE = req.body.horaEntrada;
+  let newDay = await Dia.create({
+    fecha: fecha,
+    horaEntrada: horaE,
+    horaSalida: "",
+  }).then((createdDay) => {
+    return createdDay;
+  });
+  let updatedUser = await User.findByIdAndUpdate(user._id, {
+    $push: { dias: newDay._id },
+  }).then((algo) => {
+    return algo;
+  });
+  let populatedUser = await User.findById(user._id).populate("dias");
+  console.log(populatedUser);
+  res.send(populatedUser);
 });
-
-//* RUTA PRIVADA ADMIN
-
-authRoutes.get("/privateAdmin", async (req, res) => {
-  const token = req.headers.token;
-  //const dni = req.headers.dni;
-  if (!token) {
-    res.send({
-      auth: false,
-      message: "There is no token provided",
-    });
-    return;
-  }
-  console.log(req);
-  let user = await tokenValidation(res, token, "Admin");
-
-  if (!user) {
-    res.send({ auth: false, message: "User does not exist" });
-    return;
-  }
-
-  const admin = await User.findById(user._id).populate("equipo");
-
-  res.send(admin);
-});
-
 
 //* RUTA DELETE
 
@@ -234,9 +209,8 @@ authRoutes.delete("/deleteUser", async (req, res) => {
   console.log("user deleted:" + " " + user);
 });
 
-/*
 //* RUTA UPDATE
-
+/*
 authRouteS.post("/updateUser", async (req, res) => {
   let dni = req.headers.dni;
   console.log("dni:"+" "+dni);

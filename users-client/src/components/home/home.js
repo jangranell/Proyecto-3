@@ -7,8 +7,11 @@ const Home = () => {
             <h1 className="home-container">Home</h1>
             <Link to="/login">Log In</Link>
             <br />
-            <br />
+            <br /> 
             <Link to="/signup">Sign Up</Link>
+            <br /> 
+            <br /> 
+            <Link to="/session">Session</Link>
         </div>
     );
 };

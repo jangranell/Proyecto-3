@@ -48,9 +48,9 @@ var corsOptionsDelegate = function (req, callback) {
 
 
 */
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use("/", auth);
 /*
 // rutas TRABAJADOR

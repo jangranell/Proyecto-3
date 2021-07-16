@@ -3,8 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/Usuario");
 const Equipo = require("../models/Equipo");
 
-
-let tokenValidation = async (response, token, role) => {
+let tokenValidation = async (response, token) => {
   let validationResult = {};
 
   if (!token) {
@@ -25,7 +24,7 @@ let tokenValidation = async (response, token, role) => {
       message: `Not valid token.`,
     });
     return;
-  }
+  } /*
   let autorizacion = false;
   console.log(role);
   console.log(validationResult.role);
@@ -39,10 +38,10 @@ let tokenValidation = async (response, token, role) => {
       message: "No estás autorizado.",
     });  
     return;
-  }
-  let user = await User.findById(validationResult.id, { password: 0 }).populate(
-    "equipos"
-  );
+  }*/
+  let user = await User.findById(validationResult.id, { password: 0 })
+    .populate("equipos")
+    .populate("dias");
 
   if (!user) {
     response.send({
