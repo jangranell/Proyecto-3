@@ -1,20 +1,34 @@
+body{
+    font-size:14px
+}
 .tableentrada{
     padding: 10px 20px 10px 20px;
     margin: 10px;
-    border: grey 5px double;
+    border: grey 3px solid;
     border-radius: 10px;
 }
+
+
 tr{
     font-size: larger;
 }
+
+tr:hover{
+    animation: table 1.1s ease-in-out infinite;
+}
+@keyframes table {
+    0% {background-color: rgb(211, 211, 211); color: rgb(37, 37, 37)}
+    70% {background-color: rgb(238, 238, 238); color: rgb(37, 37, 37)}
+    100% {background-color: white; color: black}
+};
 .botLogOut{
-    background-color:black;
+    background-color:grey;
     color: white;   
 }
 .botLogOut:hover{
-    animation: WtoB 1.5s infinite ease-in alternate-reverse;
+    animation: WtoB 2s infinite ease-in-out alternate-reverse;
 }
 @keyframes WtoB {
-    from {background-color: black; color: white}
-    to {background-color: white; color: black}
+    from {background-color: white; color: black}
+    to {background-color: grey; color: white}
   }

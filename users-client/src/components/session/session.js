@@ -91,11 +91,13 @@ const Session = () => {
   useEffect(async () => {
     let userInformation = await getUser();
     getDate(userInformation);
-  }, []);
+  }, []); 
+  const ActuBut = async () => {
 
-  let entradas = info.dias;
-  console.log(entradas);
-  console.log(info.dias[0]);
+  } 
+  const BorrarBut = async () => {
+    
+  }
 
   if (info.load === false) {
     return (
@@ -167,9 +169,9 @@ const Session = () => {
             <button className="botLogOut">LOG out</button>
           </header>
           {console.log(info.dias)}
-          <p>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</p>
-          <br></br>
-          <p>Tus Entradas:</p>
+          <h1>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</h1>
+
+          <h2>Tus Entradas:</h2>
           <table class="tableentrada">
             <tbody>
               {info.dias.map((entrada) => {
@@ -177,7 +179,7 @@ const Session = () => {
                   <tr key={`entrada-container-${entrada._id}`}>
                     <td key={`entrada-fecha-${entrada._id}`}>
                       {entrada.fecha} -- {entrada.horaEntrada} --{" "}
-                      {entrada.horaSalida}
+                      {entrada.horaSalida} <button onClick={ActuBut}> Actualizar</button> <button onClick={BorrarBut}> Borrar</button>
                     </td>
                   </tr>
                 );
