@@ -1,4 +1,20 @@
-table{
-    padding: 20px;
-    margin:5px
+.tableentrada{
+    padding: 10px 20px 10px 20px;
+    margin: 10px;
+    border: grey 5px double;
+    border-radius: 10px;
 }
+tr{
+    font-size: larger;
+}
+.botLogOut{
+    background-color:black;
+    color: white;   
+}
+.botLogOut:hover{
+    animation: WtoB 1.5s infinite ease-in alternate-reverse;
+}
+@keyframes WtoB {
+    from {background-color: black; color: white}
+    to {background-color: white; color: black}
+  }

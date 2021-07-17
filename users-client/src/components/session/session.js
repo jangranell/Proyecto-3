@@ -91,11 +91,10 @@ const Session = () => {
   useEffect(async () => {
     let userInformation = await getUser();
     getDate(userInformation);
-    
   }, []);
 
   let entradas = info.dias;
-  console.log(entradas);    
+  console.log(entradas);
   console.log(info.dias[0]);
 
   if (info.load === false) {
@@ -111,11 +110,25 @@ const Session = () => {
       return (
         <div>
           <header>
-            <button>LOG out</button>
+            <button className="botLogOut">LOG out</button>
           </header>
           <p>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</p>
           <br></br>
-
+          <table className="tableentrada">
+            <tbody>
+              {info.dias.map((entrada) => {
+                return (
+                  <tr key={`entrada-container-${entrada._id}`}>
+                    <td key={`entrada-fecha-${entrada._id}`}>
+                      {entrada.fecha} -- {entrada.horaEntrada} --{" "}
+                      {entrada.horaSalida}
+                    </td>
+                  </tr>
+                );
+              })}
+              ;
+            </tbody>{" "}
+          </table>
           <br></br>
           <Link to="/">HOME</Link>
         </div>
@@ -124,11 +137,25 @@ const Session = () => {
       return (
         <div>
           <header>
-            <button>LOG out</button>
+            <button className="botLogOut">LOG out</button>
           </header>
           <p>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</p>
           <br></br>
-
+          <table className="tableentrada">
+            <tbody>
+              {info.dias.map((entrada) => {
+                return (
+                  <tr key={`entrada-container-${entrada._id}`}>
+                    <td key={`entrada-fecha-${entrada._id}`}>
+                      {entrada.fecha} -- {entrada.horaEntrada} --{" "}
+                      {entrada.horaSalida}
+                    </td>
+                  </tr>
+                );
+              })}
+              ;
+            </tbody>{" "}
+          </table>
           <br></br>
           <Link to="/">HOME</Link>
         </div>
@@ -137,22 +164,25 @@ const Session = () => {
       return (
         <div>
           <header>
-            <button>LOG out</button>
+            <button className="botLogOut">LOG out</button>
           </header>
-          {console.log(info)}
+          {console.log(info.dias)}
           <p>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</p>
           <br></br>
           <p>Tus Entradas:</p>
-          //TODO -- LIST DIAS IN INFO.DIAS ARRAY 
-          //! W I P
-          <table>
-         <tr>{`- FECHA: ${info.dias[0].fecha} -- Hora Entrada:  ${info.dias[0].horaEntrada}`}</tr>
-         <tr>{`- FECHA: ${info.dias[1].fecha} -- Hora Entrada:  ${info.dias[1].horaEntrada}`}</tr>
-         <tr>{`- FECHA: ${info.dias[2].fecha} -- Hora Entrada:  ${info.dias[2].horaEntrada}`}</tr>
-         <tr>{`- FECHA: ${info.dias[3].fecha} -- Hora Entrada:  ${info.dias[3].horaEntrada}`}</tr>
-         <tr>{`- FECHA: ${info.dias[4].fecha} -- Hora Entrada:  ${info.dias[4].horaEntrada}`}</tr>
-         <tr> -----------------------------SEPARACION---------------------------- </tr>
-          //! W I P
+          <table class="tableentrada">
+            <tbody>
+              {info.dias.map((entrada) => {
+                return (
+                  <tr key={`entrada-container-${entrada._id}`}>
+                    <td key={`entrada-fecha-${entrada._id}`}>
+                      {entrada.fecha} -- {entrada.horaEntrada} --{" "}
+                      {entrada.horaSalida}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
           <br></br>
           <Link to="/">HOME</Link>
