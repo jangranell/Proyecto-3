@@ -1,5 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./signup.css";
 const useState = React.useState;
 
 const Signup = () => {
@@ -18,15 +19,15 @@ const Signup = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    postLogin();
+    postSignIn();
   };
 
-  const postLogin = async () => {
+  const postSignIn = async () => {
     let inputInfo = {
       username: info.username,
       password: info.password,
     };
-    let responseFromServer = await fetch("http://localhost:3001/login", {
+    let responseFromServer = await fetch("http://localhost:3001/signup", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -46,13 +47,29 @@ const Signup = () => {
 
   return (
     <div>
-    <Link to="/">HOME</Link>
-     <form onSubmit={handleFormSubmit}>
-      <label>User name</label>
-        <input type="text" name="username" onChange={handleChange} />
-        <label>User name</label>
-        <input type="text" name="password" onChange={handleChange} />
-        <input type="submit" value="Submit" />
+      <form onSubmit={handleFormSubmit}>
+        <Link to="/">HOME</Link>
+        <fieldset>
+          <legend className="legendSign"> Sign In </legend>
+          <form onSubmit={handleFormSubmit}>
+            <label>Nombre: </label>
+            <input type="text" name="nombre" onChange={handleChange} />
+            <br /> <br />
+            <label>Apellido: </label>
+            <input type="text" name="apellido" onChange={handleChange} />
+            <br /> <br />
+            <label>DNI: </label>
+            <input type="text" name="dni" onChange={handleChange} />
+            <br /> <br />
+            <label>Role:</label>
+              <input type="radio" value="User" name="gender" /> User
+              <input type="radio" value="Boss" name="gender" /> Boss
+              <input type="radio" value="Admin" name="gender" /> Admin
+           <br /> <br />
+            
+            <input type="submit" value="Submit" />
+          </form>
+        </fieldset>
       </form>
     </div>
   );

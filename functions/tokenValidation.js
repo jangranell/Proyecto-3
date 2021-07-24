@@ -24,21 +24,7 @@ let tokenValidation = async (response, token) => {
       message: `Not valid token.`,
     });
     return;
-  } /*
-  let autorizacion = false;
-  console.log(role);
-  console.log(validationResult.role);
-  console.log(validationResult);
-  if (role == validationResult.role) {
-    autorizacion = true;
-  };
-  if (autorizacion == false) {
-    response.send({
-      auth: false,
-      message: "No estás autorizado.",
-    });  
-    return;
-  }*/
+  } 
   let user = await User.findById(validationResult.id, { password: 0 })
     .populate("equipos")
     .populate("dias");

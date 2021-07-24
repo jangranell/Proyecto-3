@@ -1,43 +1,14 @@
-body{
-    background-color: azure;
-    color: black;
-    margin: 1%;
-};
-
-.home-container{
-    font-size: 20px;
-};
-
-.home-container:hover{
-    font-size: 25px;
-    background-color: aquamarine;
+body {
+  background-color: darkgrey;
+  color: black;
+  margin: 1%;
+  text-align: center;
 }
 
-link:link{
-  background-color: aqua;
-  color: aliceblue;
+.home-container {
+  font-size: 25px;
 }
 
-link:link {
-  color: green;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-link:visited {
-  color: pink;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-link:hover {
-  color: red;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-link:active {
-  color: yellow;
-  background-color: transparent;
-  text-decoration: underline;
+.linki{
+  font: 900 30px green;
 }

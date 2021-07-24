@@ -134,8 +134,6 @@ authRoutes.post("/login", async (req, res) => {
     token: newToken,
     ID: user._id,
   });
-  //res.redirect('/private')
-  res.send("ruta terminada");
 });
 
 //* RUTA PRIVADA
@@ -143,19 +141,47 @@ authRoutes.post("/login", async (req, res) => {
 authRoutes.get("/private", async (req, res) => {
   const token = req.headers.token;
   let user = await tokenValidation(res, token);
-  if (!token) {
-    res.send({
-      auth: false,
-      message: "There is no token provided",
-    });
-    return;
-  }
 
   if (!user) {
     res.send({ auth: false, message: "User does not exist" });
     return;
   }
-  res.send(user);
+  res.send({ auth: true, message: "Welcome", user: user });
+});
+
+//* RUTA Admin
+
+authRoutes.get("/admin", async (req, res) => {
+  const token = req.headers.token;
+  let user = await tokenValidation(res, token);
+
+  if (!user) {
+    return;
+  }
+
+  let usuarios = await User.find().then((users) => {
+    return users;
+  });
+  let usuariosFiltrados = usuarios.filter((usuario) => {
+    if (usuario.role !== "Admin") {
+      return usuario;
+    }
+  });
+  res.send({ usuariosFiltrados: usuariosFiltrados, auth: true });
+});
+
+//* RUTA Trabajador
+
+authRoutes.get("/trabajador/:id", async (req, res) => {
+  const token = req.headers.token;
+  let user = await tokenValidation(res, token);
+
+  if (!user) {
+    return;
+  }
+  let id = req.params.id;
+  let trabajador = await User.findById(id).populate("equipo").populate("dias")
+  res.send({ trabajador: trabajador, auth: true });
 });
 
 //* FECHA HORA
@@ -163,36 +189,45 @@ authRoutes.get("/private", async (req, res) => {
 authRoutes.put("/entrada", async (req, res) => {
   const token = req.headers.token;
   let user = await tokenValidation(res, token);
-  if (!token) {
-    res.send({
-      auth: false,
-      message: "There is no token provided",
-    });
-    return;
-  }
 
   if (!user) {
-    res.send({ auth: false, message: "User does not exist" });
     return;
   }
 
   let fecha = req.body.fecha;
   let horaE = req.body.horaEntrada;
+  let horaS = req.body.horaSalida;
+  console.log(typeof req.body.horaSalida);
   let newDay = await Dia.create({
     fecha: fecha,
     horaEntrada: horaE,
-    horaSalida: "",
+    horaSalida: horaS,
   }).then((createdDay) => {
     return createdDay;
   });
-  let updatedUser = await User.findByIdAndUpdate(user._id, {
+  await User.findByIdAndUpdate(user._id, {
     $push: { dias: newDay._id },
   }).then((algo) => {
     return algo;
   });
   let populatedUser = await User.findById(user._id).populate("dias");
-  console.log(populatedUser);
   res.send(populatedUser);
+});
+
+//RUTA Salida
+authRoutes.put("/salida/:id", async (req, res) => {
+  console.log(req.params.id);
+  let id = req.params.id;
+  let fecha = req.body.fecha;
+  let horaE = req.body.horaEntrada;
+  let horaS = req.body.horaSalida;
+
+  await Dia.findByIdAndUpdate(id, {
+    fecha: fecha,
+    horaEntrada: horaE,
+    horaSalida: horaS,
+  }).then((algo) => {});
+  res.send({ message: "salida" });
 });
 
 //* RUTA DELETE

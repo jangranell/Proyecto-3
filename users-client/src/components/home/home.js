@@ -5,13 +5,15 @@ const Home = () => {
     return (
         <div>
             <h1 className="home-container">Home</h1>
-            <Link to="/login">Log In</Link>
+            <Link to="/login" classname="linki">Log In</Link>
             <br />
             <br /> 
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/signup" classname="linki">Sign Up</Link>
             <br /> 
             <br /> 
-            <Link to="/session">Session</Link>
+            <Link to="/session" classname="linki">Session</Link>
+            <br /> 
+            <Link to="/admin" classname="linki">ADMIN</Link>
         </div>
     );
 };
