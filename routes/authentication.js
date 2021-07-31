@@ -40,7 +40,7 @@ authRoutes.get("/", (req, res) => {
   */
 
 authRoutes.post("/signup", async (req, res) => {
-  let user = await tokenValidation(res, "Admin");
+  /* let user = await tokenValidation(req, "Admin");*/
 
   const nombreU = req.body.nombre;
   const apellidoU = req.body.apellido;
@@ -51,7 +51,7 @@ authRoutes.post("/signup", async (req, res) => {
     res.send({
       auth: false,
       token: null,
-      message: `Provide remaining data (Nombre, Apellido, Dni, Role)`,
+      message: `Provide remaining data (${nombreU}, ${apellidoU}, ${dniU}, ${roleU}) `,
     });
     return;
   }
@@ -180,7 +180,7 @@ authRoutes.get("/trabajador/:id", async (req, res) => {
     return;
   }
   let id = req.params.id;
-  let trabajador = await User.findById(id).populate("equipo").populate("dias")
+  let trabajador = await User.findById(id).populate("equipo").populate("dias");
   res.send({ trabajador: trabajador, auth: true });
 });
 

@@ -1,0 +1,14 @@
+.login {
+  padding: 10px;
+}
+
+button.btnmModif {
+  padding: 5px;
+  border: 2px solid yellow;
+  font-weight: bold;
+}
+button.btnElim {
+  padding: 5px;
+  border: 2px solid red;
+  font-weight: bold;
+}

@@ -1,8 +1,9 @@
-import "./session.css";
+/* import "./session.css"; */
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import Admin from "../admin/admin.js";
-import nopeGif from "../../img/nope.gif"
+import nopeGif from "../../img/nope.gif";
+import FarmaciaLogo from "../../img/logotipo alta calidad.jpg";
 const { useState, useEffect } = React;
 
 const Session = () => {
@@ -156,17 +157,12 @@ const Session = () => {
     console.log(logOutFunc);
     history.push("/login");
   };
-  //!
-  //TODO: ACTUALIZAR ENTRADA && BORRAR ENTRADA
-  //!
-  const ActuBut = async () => {};
-
-  const BorrarBut = async () => {};
-
   if (info.load === false) {
     return (
       <div>
-        <h1>Cargando... 99%</h1>
+        <h1 className="pb-8 text-5xl text-center bg-clip-text text-transparent bg-gradient-to-r from-red-300 to-red-700 font-bold">
+          Cargando... 99%
+        </h1>
         <br></br>
         <Link to="/">HOME</Link>
       </div>
@@ -175,21 +171,32 @@ const Session = () => {
     if (window.localStorage.Role === "User") {
       return (
         <div>
-          <header className="heade">
-            <button className="botLogOut" onClick={LogOutBut}>
+          <header className="heade grid grid-cols-2 divide-x divide-gray-100 text-gray-200 ">
+            <button
+              className="text-xl  text-red-700 underline"
+              onClick={LogOutBut}
+            >
               LOG out
             </button>
-            <button className="botFichar" onClick={getDate}>
+            <button
+              className="text-xl text-green-700 underline"
+              onClick={getDate}
+            >
               FICHAR
             </button>
           </header>
-          <h1>{`Bienvenido ${info.nombre} ${info.apellido},`}</h1>
-          <h2>Tus Entradas:</h2>
-          <table className="tableentrada">
+          <br></br>
+          <h1 className="text-3xl font-bold">{`Bienvenido ${info.nombre} ${info.apellido},`}</h1>
+          <h2 className="text-2xl font-semibold">Tus Entradas:</h2>
+          <br></br>
+          <table className="text-lg	">
             <tbody>
               {info.dias.map((entrada, index) => {
                 return (
-                  <tr key={`entrada-container-${entrada._id}`}>
+                  <tr
+                    className="border border-green-500"
+                    key={`entrada-container-${entrada._id}`}
+                  >
                     <td key={`entrada-fecha-${entrada._id}`}>
                       <strong>{`Entrada Nº:  ` + (index + 1)}</strong> -{" "}
                       {entrada.fecha} -- {entrada.horaEntrada} --{" "}
@@ -201,7 +208,12 @@ const Session = () => {
             </tbody>
           </table>
           <br></br>
-          <Link to="/">HOME</Link>
+          <Link
+            className="text-green-800 underline text-lg font-semibold"
+            to="/"
+          >
+            HOME
+          </Link>
         </div>
       );
     } else if (window.localStorage.Role === "Boss") {
@@ -211,30 +223,30 @@ const Session = () => {
       return (
         <div>
           <header className="heade">
-            <button className="botLogOut" onClick={LogOutBut}>
+            <button className="bg-red-500 hover:bg-red-700" onClick={LogOutBut}>
               LOG out
             </button>
-            <button className="botFichar" onClick={getDate}>
-              FICHAR
-            </button>
+            <button onClick={getDate}>FICHAR</button>
           </header>
           <h1>{`Bienvenido ${info.role} ${info.nombre} ${info.apellido},`}</h1>
           <h2>Tus Entradas:</h2>
-          <table className="tableentrada">
-            <tbody>
-              {info.dias.map((entrada, index) => {
-                return (
-                  <tr key={`entrada-container-${entrada._id}`}>
-                    <td key={`entrada-fecha-${entrada._id}`}>
-                      <strong>{`Entrada Nº:  ` + (index + 1)}</strong> -{" "}
-                      {entrada.fecha} -- {entrada.horaEntrada} --{" "}
-                      {entrada.horaSalida}{" "}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="border-4 border-green-600">
+            <table className="">
+              <tbody>
+                {info.dias.map((entrada, index) => {
+                  return (
+                    <tr className="" key={`entrada-container-${entrada._id}`}>
+                      <td key={`entrada-fecha-${entrada._id}`}>
+                        <strong>{`Entrada Nº:  ` + (index + 1)}</strong> -{" "}
+                        {entrada.fecha} -- {entrada.horaEntrada} --{" "}
+                        {entrada.horaSalida}{" "}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
           <br></br>
           <Link to="/">HOME</Link>
         </div>
@@ -245,14 +257,19 @@ const Session = () => {
       }
       return (
         <div>
-          <header className="heade">
-            <button className="botLogOut" onClick={LogOutBut}>
+          <nav className="heade grid grid-cols-2 divide-x divide-gray-100 text-gray-200 ">
+            <button
+              className="text-xl  text-red-700 underline "
+              onClick={LogOutBut}
+            >
               LOG out
             </button>
-            <button className="botFichar" onClick={getDate}>
-              FICHAR
+            <button>
+              <Link className="text-xl text-green-700 underline" to="/signup">
+                Sign In
+              </Link>
             </button>
-          </header>
+          </nav>
           <Admin></Admin>
         </div>
       );
@@ -260,10 +277,15 @@ const Session = () => {
   } else if (info.auth === false) {
     return (
       <div>
+        <h1 className="pb-8 text-5xl text-center bg-clip-text text-transparent bg-gradient-to-r from-red-800 to-red-600 font-bold">
+          Usuario Desconocido
+        </h1>
         <h2>{info.message}</h2>
         <img src={nopeGif} width="480" height="277" alt="nope"></img>
-        <br></br>
-        <Link to="/">HOME</Link>
+        <br></br>{" "}
+        <Link className="text-xl text-purple-800 underline" to="/login">
+          Atrás
+        </Link>
       </div>
     );
   }

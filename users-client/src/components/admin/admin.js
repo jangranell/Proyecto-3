@@ -1,5 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import React from "react";
+import "./admin.css";
 const { useState, useEffect } = React;
 
 const Admin = () => {
@@ -41,6 +42,7 @@ const Admin = () => {
       });
     }
   };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -65,16 +67,22 @@ const Admin = () => {
     } else if (info.auth === true) {
       return (
         <div>
-          <h1>{`Bienvenido ADMIN,`}</h1>
-          <h2>Tus Trabajadores:</h2>
-          <table className="tableentrada">
-            <tbody>
+          <h1 className="pb-8 text-3xl text-center bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-300 font-bold">{`Bienvenido ADMIN ,`}</h1>
+          <h2 className="text-2xl text-center">Tus Trabajadores:</h2>
+          <br></br>
+          <table className="text-xl mx-auto ">
+            <tbody className="text-center">
               {info.informacion.map((trabajador, index) => {
                 return (
-                  <tr key={trabajador._id}>
-                    <td>{trabajador.nombre}</td> / <td>{trabajador.role}</td> //{" "}
+                  <tr className="border border-green-500" key={trabajador._id}>
+                    <td>{trabajador.nombre}</td> <td>({trabajador.role})</td> -
                     <td>
-                      <Link to={`/trabajador/${trabajador._id}`}>Detail</Link>
+                      <Link
+                        className="text-green-600 underline"
+                        to={`/trabajador/${trabajador._id}`}
+                      >
+                        Detail
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -82,7 +90,6 @@ const Admin = () => {
             </tbody>
           </table>
           <br></br>
-          <Link to="/">HOME</Link>
         </div>
       );
     }

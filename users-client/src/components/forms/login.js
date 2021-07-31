@@ -1,7 +1,15 @@
+//!
+//TODO:
+//1. CRUD -> Delete and Update Entradas
+//2. Diseño
+//3. Props ?
+//TODO:
+//!
 import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import "./login.css";
+import FarmaciaLogoLargo from "../../img/logotipo alargado alta calidad.jpg";
 const useState = React.useState;
 
 const Login = () => {
@@ -22,10 +30,10 @@ const Login = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-//Save User Token in localStorage
+    //Save User Token in localStorage
     let myToken = await postLogin();
     saveToken(myToken);
-// Save User Role in localStorage
+    // Save User Role in localStorage
     let myRole = await postLogin2();
     saveRole(myRole);
     redirect();
@@ -67,7 +75,7 @@ const Login = () => {
       });
     return responseFromPost.Role;
   };
-  
+
   const saveToken = (tokenElement) => {
     window.localStorage.setItem("token", tokenElement);
   };
@@ -81,18 +89,41 @@ const Login = () => {
 
   return (
     <div>
-      <Link to="/">HOME</Link>
-      <fieldset>
-        <legend> Log In </legend>
-        <form onSubmit={handleFormSubmit}>
-          <label>Nombre: </label>
-          <input type="text" name="nombre" onChange={handleChange} />
+      <fieldset className="mx-96">
+        <h1 className="pb-8 text-7xl text-center bg-clip-text text-transparent bg-gradient-to-r from-green-800 to-green-300 font-bold">
+          {" "}
+          Log In{" "}
+        </h1>
+        <form
+          className="border-2 text-center  border-grey-200 width-200"
+          onSubmit={handleFormSubmit}
+        >
+          <label className="text-3xl p-2 font-semibold">Nombre: </label>
+          <input
+            className=""
+            type="text"
+            name="nombre"
+            className="placeholder-gray-500"
+            placeholder="Usuario"
+            onChange={handleChange}
+          />
           <br /> <br />
-          <label>DNI: </label>
-          <input type="text" name="dni" onChange={handleChange} />
+          <label className="text-3xl p-2 font-semibold">DNI: </label>
+          <input
+            className=""
+            type="text"
+            name="dni"
+            className="placeholder-gray-500"
+            placeholder="12345678A"
+            onChange={handleChange}
+          />
           <br />
           <br />
-          <input type="submit" value="Submit" />
+          <input
+            className="font-semibold p-2 mb-4"
+            type="submit"
+            value="Submit"
+          />
         </form>
       </fieldset>
     </div>

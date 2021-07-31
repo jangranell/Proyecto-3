@@ -1,5 +1,6 @@
 import { Link, useHistory, useParams } from "react-router-dom";
 import React from "react";
+import "./trabajador.css";
 const { useState, useEffect } = React;
 
 const Trabajador = () => {
@@ -43,21 +44,22 @@ const Trabajador = () => {
       });
     }
     console.log(responseFromGet);
-    /*if (responseFromGet.auth === true) {
-      setInfo({
-        loading: false,
-        informacion: responseFromGet.usuariosFiltrados,
-        auth: true,
+  };
+
+  const deleteFecha = async () => {
+    let responseFromDel = await fetch("http://localhost:3001/admin", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        token: window.localStorage.token,
+        Role: window.localStorage.Role,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        return result;
       });
-      let trabajadores = responseFromGet.usuariosFiltrados;
-      console.log(trabajadores);
-    } else if (responseFromGet.auth === false) {
-      setInfo({
-        loading: false,
-        auth: false,
-        message: "VETE DE AQUÍ, FORASTERO!!",
-      });
-    } */
   };
 
   useEffect(() => {
@@ -73,19 +75,29 @@ const Trabajador = () => {
     if (info.auth === true) {
       return (
         <div>
-          <h1 className="home-container">
+          <h1 className="text-3xl font-bold">
             {info.informacion.role} {info.informacion.nombre}
           </h1>
-          <h2>Sus Entradas:</h2>
-          <table className="tableentrada">
+          <h2 className="text-2xl font-semibold">Sus Entradas:</h2>
+          <br></br>
+          <table className="text-lg">
             <tbody>
               {info.informacion.dias.map((entrada, index) => {
                 return (
-                  <tr key={`entrada-container-${entrada._id}`}>
+                  <tr
+                    className="border border-green-500"
+                    key={`entrada-container-${entrada._id}`}
+                  >
                     <td key={`entrada-fecha-${entrada._id}`}>
                       <strong>{`Entrada Nº:  ` + (index + 1)}</strong> -{" "}
                       {entrada.fecha} -- {entrada.horaEntrada} --{" "}
                       {entrada.horaSalida}{" "}
+                      <button className="border-2 border-yellow-600 text-xl text-yellow-400 underline p-1 m-2">
+                        Modificar
+                      </button>
+                      <button className="border-2 border-red-600 text-xl text-red-700 underline p-1 m-2">
+                        Eliminar
+                      </button>
                     </td>
                   </tr>
                 );
@@ -93,15 +105,27 @@ const Trabajador = () => {
             </tbody>
           </table>
           <br></br>
-          <Link to="/session">Atrás</Link>
+          <Link
+            className="text-green-800 underline text-lg font-semibold"
+            to="/session"
+          >
+            Atrás
+          </Link>
         </div>
       );
     } else if (info.auth === false) {
       return (
         <div>
-          <h1>LARGO!!</h1>
+          <h1 className="text-4xl text-red-800 font-bold">
+            Fuera de Aquí, Forastero!!
+          </h1>
           <br></br>
-          <Link to="/">HOME</Link>
+          <Link
+            className="text-green-800 underline text-lg font-semibold"
+            to="/"
+          >
+            HOME
+          </Link>
         </div>
       );
     }

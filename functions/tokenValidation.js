@@ -24,7 +24,7 @@ let tokenValidation = async (response, token) => {
       message: `Not valid token.`,
     });
     return;
-  } 
+  }
   let user = await User.findById(validationResult.id, { password: 0 })
     .populate("equipos")
     .populate("dias");

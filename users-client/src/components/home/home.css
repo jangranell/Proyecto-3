@@ -8,7 +8,6 @@ body {
 .home-container {
   font-size: 25px;
 }
-
-.linki{
-  font: 900 30px green;
+nav {
+  padding: 10px;
 }
