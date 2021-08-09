@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect, } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import "./signup.css";
 const useState = React.useState;
 
@@ -10,11 +10,9 @@ const Signup = () => {
     dni: "",
     role: "",
   });
-  /* if (user.role !== "Admin") {
-    const redirect = async () => {
-      history.push("/session");
-    };
-  } */
+  let history = useHistory();
+  console.log(window.localStorage.Role);
+
   const handleChange = (event) => {
     setInfo({
       ...info,
@@ -25,8 +23,16 @@ const Signup = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
+    console.log("based Admin");
+    if (window.localStorage.Role !== "Admin") {
+      console.log("pleb Admin");
+      const redirectPleb = async () => {
+        history.push("/login");
+      };
+    }
+    console.log("based Admin");
     postSignUp();
+    redirect();
   };
 
   const postSignUp = async () => {
@@ -53,11 +59,7 @@ const Signup = () => {
       );
       document.location.reload();
     }
-    console.log("hasta aqui si antes");
-    console.log(window.localStorage.NewRole);
-    console.log("hasta aqui si");
     let inputRol = window.localStorage.NewRole;
-    console.log("hasta aqui si 53");
 
     let inputInfo = {
       nombre: inputNombre,
@@ -96,6 +98,10 @@ const Signup = () => {
         "Rol: " +
         inputRol
     );
+  };
+
+  const redirect = async () => {
+    history.push("/login");
   };
 
   return (
